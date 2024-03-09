@@ -1,0 +1,15 @@
+{
+  "name": "com.blueoyster.stores-unity",
+  "version": "0.1.0",
+  "description": "Simple global state management for Unity.",
+  "displayName": "stores-unity",
+  "dependencies": {
+    "com.blueoyster.save-system-unity" : "0.1.0",
+    "com.blueoyster.json-persistence-unity": "1.2.0"
+  },
+  "author": {
+    "name": "Justin Awrey",
+    "email": "justin@justinawrey.com",
+    "url": "https://justinawrey.com"
+  }
+}

@@ -1,0 +1,17 @@
+{
+    "name": "BlueOyster.stores-unity",
+    "rootNamespace": "",
+    "references": [
+        "GUID:e945f39cb4e13435d8093afe6bb554d8",
+        "GUID:2809604cae8074e088bad23318069f13"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
