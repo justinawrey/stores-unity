@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using Persistence;
 using UnityEditor;
 using UnityEngine;
+using System.Threading.Tasks;
 
 namespace Stores
 {
@@ -32,7 +33,7 @@ namespace Stores
             store = Store.GetDynamic(target.GetType());
         }
 
-        public override void OnInspectorGUI()
+        public override async void OnInspectorGUI()
         {
             serializedObject.Update();
             DrawHeaderBar("Data Fields");
@@ -123,7 +124,7 @@ namespace Stores
             {
                 // NOTE: deserialize into an object, and then re-serialize into a formatted string.
                 // inefficient, but fine in the editor.
-                Load();
+                await Load();
             }
 
             if (deletePressed)
@@ -133,7 +134,7 @@ namespace Stores
             }
         }
 
-        private async void Load()
+        private async Task Load()
         {
             await Store.LoadFromDisk(store, false);
 
