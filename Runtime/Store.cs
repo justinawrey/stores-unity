@@ -93,7 +93,7 @@ namespace Stores
 
         // TODO: what if it doesn't exist yet?
         // TODO: memory use here isnt great
-        public static async Task<T> LoadFromDisk<T>(T store)
+        public static async Task<T> LoadFromDisk<T>(T store, bool triggerSubscribeToComputed = true)
             where T : Store
         {
             JsonSerializerSettings settings = new()
@@ -106,8 +106,13 @@ namespace Stores
             };
 
             T loaded = await JsonPersistence.FromJson<T>(store.FileName, settings);
+
             // TODO: this isn't ideal... might have some mem leak problems here
-            loaded.SubscribeToComputed();
+            if (triggerSubscribeToComputed)
+            {
+                loaded.SubscribeToComputed();
+            }
+
             return loaded;
         }
 

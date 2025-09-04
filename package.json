@@ -1,6 +1,6 @@
 {
   "name": "com.blueoyster.stores-unity",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Simple global state management for Unity.",
   "displayName": "stores-unity",
   "dependencies": {

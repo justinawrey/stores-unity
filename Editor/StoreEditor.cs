@@ -135,7 +135,7 @@ namespace Stores
 
         private async void Load()
         {
-            await Store.LoadFromDisk(store);
+            await Store.LoadFromDisk(store, false);
 
             // extra persist is not pretty, but w/e, I gotta get dat visual lol.
             prettyString = await Store.PersistToDisk(store);
