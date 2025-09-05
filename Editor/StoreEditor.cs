@@ -17,7 +17,8 @@ namespace Stores
         private const BindingFlags allBindingFlags = (BindingFlags)(-1);
         private readonly string[] propertyExclusionList = new string[] { "m_Script" };
 
-        private string prettyString = null;
+        private SerializedProperty prettyStringProperty;
+
         private readonly float verticalSpace = 10;
         private Store store;
 
@@ -31,6 +32,7 @@ namespace Stores
             // Which means its actually safe to do OnGet subscribes
             // even when entering/exiting playmode
             store = Store.GetDynamic(target.GetType());
+            prettyStringProperty = serializedObject.FindProperty("prettyString");
         }
 
         public override async void OnInspectorGUI()
@@ -48,7 +50,7 @@ namespace Stores
             DrawPersistenceState();
             DrawPersistenceButtons();
 
-            if (prettyString == null && Persisted && !Application.isPlaying)
+            if (prettyStringProperty.stringValue == null && Persisted && !Application.isPlaying)
             {
                 Load();
             }
@@ -56,7 +58,7 @@ namespace Stores
             if (Persisted)
             {
                 EditorGUI.BeginDisabledGroup(true);
-                EditorGUILayout.TextArea(prettyString);
+                EditorGUILayout.TextArea(prettyStringProperty.stringValue);
                 EditorGUI.EndDisabledGroup();
             }
 
@@ -117,7 +119,7 @@ namespace Stores
 
             if (savePressed)
             {
-                prettyString = await Store.PersistToDisk(store);
+                prettyStringProperty.stringValue = await Store.PersistToDisk(store);
             }
 
             if (loadPressed)
@@ -130,8 +132,9 @@ namespace Stores
             if (deletePressed)
             {
                 File.Delete(PersistencePath);
-                prettyString = null;
+                prettyStringProperty.stringValue = null;
             }
+            serializedObject.ApplyModifiedProperties();
         }
 
         private async Task Load()
@@ -139,7 +142,7 @@ namespace Stores
             await Store.LoadFromDisk(store, false);
 
             // extra persist is not pretty, but w/e, I gotta get dat visual lol.
-            prettyString = await Store.PersistToDisk(store);
+            prettyStringProperty.stringValue = await Store.PersistToDisk(store);
         }
 
         private IEnumerable<SerializedProperty> GetDirectChildren(SerializedObject serializedObject)

@@ -28,6 +28,12 @@ namespace Stores
     [JsonObject(MemberSerialization.OptIn)]
     public class Store : ScriptableObject
     {
+        [HideInInspector]
+        [SerializeField]
+        // used for displaying the json in the editor, needs to be serialized
+        // in order to persist across domain reloads
+        private string prettyString = null;
+
         private static readonly string assetFolder = "Stores";
         private static readonly Dictionary<Type, Store> storeCache = new();
         private static readonly JsonConverter[] defaultConverters = new JsonConverter[]
