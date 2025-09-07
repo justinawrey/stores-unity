@@ -140,6 +140,24 @@ namespace Stores
             );
         }
 
+        public static string PersistToDiskSync<T>(T store)
+            where T : Store
+        {
+            return JsonPersistence.PersistJsonSync(
+                store,
+                store.FileName,
+                // Always persist to disk in pretty form, because its just more practical to debug that
+                // way and we don't really have perf problems (yet)
+                // TODO: rethink this if we have perf problems
+                // TODO: memory use here isnt great
+                new JsonSerializerSettings()
+                {
+                    Converters = store.Converters,
+                    Formatting = Formatting.Indented,
+                }
+            );
+        }
+
         // Useful to do any store related setup, like Computed<T> callbacks.
         protected virtual void SubscribeToComputed() { }
     }
