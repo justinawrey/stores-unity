@@ -48,12 +48,21 @@ namespace Stores
             new Vector3IntConverter(),
         };
 
+        protected virtual List<JsonConverter> CustomConverters
+        {
+            get
+            {
+                return new List<JsonConverter>();
+            }
+        }
+
         private List<JsonConverter> Converters
         {
             get
             {
                 List<JsonConverter> converters = new() { new StoreCreationConverter(GetType()) };
                 converters.AddRange(defaultConverters);
+                converters.AddRange(CustomConverters);
                 return converters;
             }
         }
